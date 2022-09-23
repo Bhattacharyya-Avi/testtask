@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 22, 2022 at 04:22 PM
+-- Generation Time: Sep 23, 2022 at 01:31 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.9
 
@@ -32,6 +32,8 @@ CREATE TABLE `answers` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `question_id` bigint(20) UNSIGNED NOT NULL,
   `option_id` bigint(20) UNSIGNED NOT NULL,
+  `is_correct` tinyint(1) NOT NULL DEFAULT '0',
+  `point` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -54,8 +56,8 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'dep1', '2022-09-22 09:11:53', '2022-09-22 09:11:53'),
-(2, 'dep2', '2022-09-22 09:11:53', '2022-09-22 09:11:53');
+(1, 'dep1', '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(2, 'dep2', '2022-09-23 07:30:22', '2022-09-23 07:30:22');
 
 -- --------------------------------------------------------
 
@@ -97,7 +99,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (6, '2022_09_22_142417_create_questions_table', 1),
 (7, '2022_09_22_142507_create_options_table', 1),
-(8, '2022_09_22_154230_create_answers_table', 2);
+(8, '2022_09_22_154230_create_answers_table', 1);
 
 -- --------------------------------------------------------
 
@@ -120,18 +122,18 @@ CREATE TABLE `options` (
 --
 
 INSERT INTO `options` (`id`, `question_id`, `option_name`, `point`, `correct_answer`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Option 1', 0.25, 1, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(2, 1, 'Option 2', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(3, 1, 'Option 3', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(4, 1, 'Option 4', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(5, 2, 'Option 1', 0.25, 1, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(6, 2, 'Option 2', 0.25, 1, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(7, 2, 'Option 3', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(8, 2, 'Option 4', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(9, 3, 'Option 1', 0.25, 1, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(10, 3, 'Option 2', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(11, 3, 'Option 3', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01'),
-(12, 3, 'Option 4', 0.25, 0, '2022-09-22 09:24:01', '2022-09-22 09:24:01');
+(1, 1, 'Option 1', 0.25, 1, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(2, 1, 'Option 2', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(3, 1, 'Option 3', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(4, 1, 'Option 4', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(5, 2, 'Option 1', 0.25, 1, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(6, 2, 'Option 2', 0.25, 1, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(7, 2, 'Option 3', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(8, 2, 'Option 4', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(9, 3, 'Option 1', 0.25, 1, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(10, 3, 'Option 2', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(11, 3, 'Option 3', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(12, 3, 'Option 4', 0.25, 0, '2022-09-23 07:30:22', '2022-09-23 07:30:22');
 
 -- --------------------------------------------------------
 
@@ -173,6 +175,7 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `questions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'single',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -181,10 +184,10 @@ CREATE TABLE `questions` (
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`id`, `question`, `created_at`, `updated_at`) VALUES
-(1, 'Sample Question type 1 MCQ', '2022-09-22 09:11:54', '2022-09-22 09:11:54'),
-(2, 'Sample Question type 2 (Multiple selection)', '2022-09-22 09:11:54', '2022-09-22 09:11:54'),
-(3, 'Sample Question type 3', '2022-09-22 09:11:54', '2022-09-22 09:11:54');
+INSERT INTO `questions` (`id`, `question`, `question_type`, `created_at`, `updated_at`) VALUES
+(1, 'Sample Question type 1 MCQ', 'single', '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(2, 'Sample Question type 2 (Multiple selection)', 'multiple', '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(3, 'Sample Question type 3', 'dropdown', '2022-09-23 07:30:22', '2022-09-23 07:30:22');
 
 -- --------------------------------------------------------
 
@@ -199,6 +202,7 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_mark` double DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -208,13 +212,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `department_id`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'user1', 1, 'user1@gmail.com', NULL, '$2y$10$tLCzpTtfs66uhr3EQZ0/XOxUC1xie1d7nXkCJoQ.W6shylbAp2mQu', NULL, '2022-09-22 09:11:54', '2022-09-22 09:11:54'),
-(2, 'user2', 1, 'user2@gmail.com', NULL, '$2y$10$G5sCdOGvQKw9Z0/1cYbZ1O8xP58g8/xCuIt/YVmi3Pw7dm7V2a/Gi', NULL, '2022-09-22 09:11:54', '2022-09-22 09:11:54'),
-(3, 'user3', 1, 'user3@gmail.com', NULL, '$2y$10$ayaAp32/VUreYPqwYJWj0OTK98X4vnTLdZbkwWf4S0vDHIuRt0oTi', NULL, '2022-09-22 09:11:54', '2022-09-22 09:11:54'),
-(4, 'user4', 2, 'user4@gmail.com', NULL, '$2y$10$d898aWgP252udmcbQcP2LOioVU/thAFTEPTQj7RsHzFkxDPMkr8OO', NULL, '2022-09-22 09:11:54', '2022-09-22 09:11:54'),
-(5, 'user5', 2, 'user5@gmail.com', NULL, '$2y$10$T5VC5/c0gRin8DQOS6BHzeHG3H4HsBp/m.XG9JqP/ugeTHmUwS5li', NULL, '2022-09-22 09:11:54', '2022-09-22 09:11:54'),
-(6, 'user6', 2, 'user6@gmail.com', NULL, '$2y$10$ANkidbCMdWYCZWGaWpyfaOB3J62MAb3o8W1QHEKzfbFKscauJGVNG', NULL, '2022-09-22 09:11:54', '2022-09-22 09:11:54');
+INSERT INTO `users` (`id`, `name`, `department_id`, `email`, `email_verified_at`, `password`, `total_mark`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'user1', 1, 'user1@gmail.com', NULL, '$2y$10$fKKYMewmvXiUU7MMIhxuAOEbMId3g6voazh7LFLTErD6RQCLbUO3K', NULL, NULL, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(2, 'user2', 1, 'user2@gmail.com', NULL, '$2y$10$3s855Tc1IIlGmMhlWJ95GuI9i6AG7AWnxuOy5AlmdEoSDOUD90I9G', NULL, NULL, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(3, 'user3', 1, 'user3@gmail.com', NULL, '$2y$10$UFte9lwOLWT4hYpYmkRAweQ4KGyuXgvfeLrekCTrPfzwzrf0civI6', NULL, NULL, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(4, 'user4', 2, 'user4@gmail.com', NULL, '$2y$10$w9MVayREdemWKxGbQy4tgu49Zqdek0zwJi7A.BrpHIEIlAA8GfgyW', NULL, NULL, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(5, 'user5', 2, 'user5@gmail.com', NULL, '$2y$10$kIXF6zwRYfytR1U04JsYm.5gG25bEN5vZSWemLeB1DPSbLdse93TG', NULL, NULL, '2022-09-23 07:30:22', '2022-09-23 07:30:22'),
+(6, 'user6', 2, 'user6@gmail.com', NULL, '$2y$10$rJDzvwpKbMgIRb4TTHBeMeHVkdKPVfWsQqCNk8LCEvlAMAyNjbs9O', NULL, NULL, '2022-09-23 07:30:22', '2022-09-23 07:30:22');
 
 --
 -- Indexes for dumped tables
