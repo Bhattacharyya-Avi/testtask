@@ -21,10 +21,11 @@ class QuestionTableSeeder extends Seeder
             ],
             [
                 'question'=> 'Sample Question type 2 (Multiple selection)',
-                'is_multiple' => 1,
+                'question_type' => "multiple",
             ],
             [
-                'question'=> 'Sample Question type 3'
+                'question'=> 'Sample Question type 3',
+                'question_type' => "dropdown",
             ],
         ];
 

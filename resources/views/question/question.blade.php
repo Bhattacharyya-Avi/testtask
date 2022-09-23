@@ -15,15 +15,14 @@
                         <form action="{{route('answer.submit')}}" method="POST">
                             @csrf
                             @foreach ($questions as $key=> $question)
-                                <input type="hidden" value="{{$question->id}}" name="questions[]">
                                 <p>{{$question->question}}</p>
-                                @if ($question->is_multiple == 0)
+                                @if ($question->question_type == "single")
                                     @foreach ($question->option as $item)
                                         <input type="radio" id="{{$item->id}}" name="options[]" value="{{$item->id}}">
                                         <label for="{{$item->id}}">{{$item->option_name}}</label>
                                         <br>
                                     @endforeach
-                                @else
+                                @elseif($question->question_type == "multiple")
                                     @foreach ($question->option as $item)
                                         <div class="form-check">
                                             <input name="options[]" class="form-check-input" type="checkbox" value="{{$item->id}}" id="flexCheckDefault">
@@ -31,6 +30,16 @@
                                                 {{$item->option_name}}
                                             </label>
                                         </div>
+                                    @endforeach
+                                @elseif($question->question_type == "dropdown")
+                                    @foreach ($question->option as $item)
+                                        {{-- <input type="radio" id="{{$item->id}}" name="options[]" value="{{$item->id}}"> --}}
+                                        <label for="{{$item->id}}">{{$item->option_name}}</label>
+                                        <select name="options[]" class="form-select" aria-label="Default select example">
+                                            <option selected value="0"></option>
+                                            <option value="{{$item->id}}">Ture</option>
+                                        </select>
+                                        <br>
                                     @endforeach
                                 @endif
                             @endforeach
