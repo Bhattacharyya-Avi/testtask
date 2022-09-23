@@ -20,7 +20,8 @@ class QuestionTableSeeder extends Seeder
                 'question'=> 'Sample Question type 1 MCQ'
             ],
             [
-                'question'=> 'Sample Question type 2 (Multiple selection)'
+                'question'=> 'Sample Question type 2 (Multiple selection)',
+                'is_multiple' => 1,
             ],
             [
                 'question'=> 'Sample Question type 3'

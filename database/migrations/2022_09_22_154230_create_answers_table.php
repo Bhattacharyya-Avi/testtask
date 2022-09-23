@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
             $table->foreignId('question_id')->constrained('questions')->restrictOnDelete();
             $table->foreignId('option_id')->constrained('options')->restrictOnDelete();
+            $table->boolean('is_correct')->default(0);
+            $table->double('point');
             $table->timestamps();
         });
     }
