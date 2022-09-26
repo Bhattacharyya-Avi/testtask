@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,9 @@ Route::controller(LoginController::class)->group(function(){
     Route::post('/do_login','doLogin')->name('do.login');
 });
 
+Route ::controller(ResultController::class)->group(function(){
+    Route::get('/result','result')->name('user.result');
+});
 Route::middleware('auth')->group(function(){
     Route::controller(QuestionController::class)->group(function(){
         Route::get('/list',"questionList")->name('question.list');
