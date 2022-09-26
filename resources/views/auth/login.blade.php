@@ -27,6 +27,8 @@
                         </div>
                         <div class="mb-3"> <button type="submit"  btn-dark w-100">Login</button> </div>
                     </form>
+
+                    <a href="{{route('user.result')}}">View result</a>
                     </div>
                 </div>
             </div>
